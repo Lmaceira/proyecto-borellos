@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #ff6347; /* Un color de comida atractivo, como el tomate */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header p {
+    font-size: 1.1em;
+}
+
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.menu {
+    margin-bottom: 30px;
+}
+
+.menu h2 {
+    text-align: center;
+    color: #ff6347;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.menu-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.menu-item p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio disponible */
+}
+
+.menu-item .price {
+    font-weight: bold;
+    color: #ff6347;
+    font-size: 1.2em;
+    align-self: flex-end; /* Alinea el precio a la derecha */
+    margin-top: 10px; /* Espacio entre descripción y precio */
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    font-size: 0.9em;
+    margin-top: 30px;
+}
