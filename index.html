@@ -1,0 +1,99 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borello's 🥐🧉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Borello's</h1>
+        <p>El sabor de Argentina ha llegado a Ávila</p>
+        <div class="logo-wrapper">
+            <img src="resources/second_logo.png" alt="Borello's Logo" class="logo">
+        </div>
+        <nav>
+            <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+            <ul class="nav-list">
+                <li><a href="#home" id="nav-inicio">Inicio</a></li>
+                <li><a href="#menu" id="nav-menu">Menú</a></li>
+                <li><a href="#haceTuPedido" id="nav-pedido">Hacé tu pedido</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="menu">
+            <h2 id="menu">Nuestro menú de esta semana</h2>
+            <div class="menu-items" id="menu-items">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </div>
+        </section>
+        <!-- NUEVA SECCIÓN DE PEDIDO -->
+        <section class="pedido">
+            <h2 id="haceTuPedido">Como hacer tu pedido</h2>
+            <ul class="pedido-pasos">
+                <li>Cada lunes, descubri nuestro stock fresco de la semana.</li>
+                <li>Elegí lo que mas te gusta.</li>
+                <li>
+                    Indícanos qué día preferis recibirlo:
+                    <select id="dia-entrega" class="pedido-select">
+                        <option value="Miércoles por la tarde" selected>Miércoles por la tarde</option>
+                        <option value="Sábado por la mañana">Sábado por la mañana</option>
+                    </select>
+                </li>
+                <li>
+                    Ingresa tu nombre aqui:
+                    <input 
+                        type="text" 
+                        id="nombre-usuario" 
+                        class="pedido-input" 
+                        maxlength="30" 
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" 
+                        placeholder="Nombre"
+                        autocomplete="off"
+                    >
+                </li>
+                <li>Y hace clic en "Contactar por WhatsApp".</li>
+                <li>En el chat, revisa que todo lo que queres está correcto.</li>
+                <li>Confirmaremos tu pedido y Listo! Recibirás tu pedido en el día elegido.</li>
+            </ul>
+            <div class="pedido-contactos">
+                <div class="pedido-item">
+                    <img src="resources/whatsapp.png" alt="WhatsApp" class="pedido-icon">
+                    <span class="pedido-label">WhatsApp:</span>
+                    <span class="pedido-info">+34 664 097 967</span>
+                    <a class="pedido-btn" id="whatsapp-btn" href="https://wa.me/34664097967" target="_blank">Contactar por WhatsApp</a>
+                </div>
+                <div class="pedido-pagos">
+                    <span class="pedido-pagos-titulo">Aceptamos pagos en efectivo y por Bizum</span>
+                    <div class="pedido-pagos-iconos">
+                        <img src="resources/efectivo.png" alt="Efectivo" class="pedido-pago-icon">
+                        <img src="resources/logotipo-bizum.jpg" alt="Bizum" class="pedido-pago-icon">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="about">
+            <h2 id="about">Sobre Borello's</h2>
+            <p>En Borello's ofrecemos una variedad de productos argentinos auténticos, desde medialunas hasta alfajores, todos hechos con amor y dedicación. Nuestro objetivo es compartir un pedacito de Argentina.</p>
+            <div class="pedido-redes">
+                <span class="pedido-redes-titulo">Seguinos en nuestras redes</span>
+                <div class="pedido-redes-iconos">
+                    <a href="https://instagram.com/borellosbakery" target="_blank">
+                        <img src="resources/instagram.png" alt="Instagram" class="pedido-icon">
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61578418115936" target="_blank">
+                        <img src="resources/facebook.png" alt="Facebook" class="pedido-icon">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Borello's. Todos los derechos reservados.</p>
+        <p>Contáctanos: borellosbakery@gmail.com</p>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>
