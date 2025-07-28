@@ -250,8 +250,9 @@ nav {
 
 .pedido-contactos {
     display: flex;
-    flex-wrap: wrap;
-    gap: 32px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     justify-content: center;
 }
 
@@ -638,4 +639,36 @@ footer {
 
 h1 { /* Solo aplica la fuente al elemento h1 */
   font-family: 'Velour Semi Bold', sans-serif;
+}
+
+.pedido-pagos {
+    display: block;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.pedido-pagos-titulo {
+    color: #a67c52;
+    font-weight: 600;
+    font-size: 1.08em;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.pedido-pagos-iconos {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.pedido-pago-icon {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    transition: transform 0.2s;
+}
+
+.pedido-pago-icon:hover {
+    transform: scale(1.50);
 }
