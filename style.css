@@ -76,22 +76,22 @@ main {
 }
 
 .menu-items {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 24px;
-    justify-content: center;
-    padding: 0 8px; /* Espacio a los lados dentro del contenedor */
-    box-sizing: border-box;
+    margin-bottom: 30px;
 }
 
-.menu-item {
+.menu-item,
+.promo-item {
     background: linear-gradient(120deg, #f5e6c8 60%, #e0d6c3 100%);
     border: 2px solid #c49a6c;
     border-radius: 18px;
     box-shadow: 0 4px 16px rgba(62,44,24,0.08);
     padding: 24px 28px;
     margin-bottom: 0;
-    width: 320px;
+    width: 100%;
+    min-width: 0;
     max-width: 100%;
     display: flex;
     flex-direction: column;
@@ -99,16 +99,137 @@ main {
     box-sizing: border-box;
 }
 
-/* En mobile, que ocupen casi todo el ancho pero con margen */
+/* Solo para destacar promociones */
+.promo-item {
+    background: #fffcf0; /* Fondo especial para promo */
+    box-shadow: 0 4px 24px rgba(198,154,108,0.12);
+    position: relative;
+}
+
+/* Etiqueta PROMO */
+.promo-item::after {
+    content: "PROMO";
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #c49a6c;
+    color: #fff;
+    font-size: 0.85em;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 8px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(198,154,108,0.12);
+    z-index: 2;
+}
+
+.menu-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(62,44,24,0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.menu-modal-content {
+    background: #fff8ec;
+    padding: 24px;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(62,44,24,0.18);
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu-modal-content img {
+    max-width: 80vw;
+    max-height: 80vh;
+    border-radius: 12px;
+}
+
+/* Asegura que el contenido interno no se desborde */
+.menu-item-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.menu-item-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(62,44,24,0.08);
+    flex-shrink: 0;
+}
+
+.menu-item-title {
+    text-align: center;
+    width: 100%;
+    margin: 0 0 8px 0;
+    word-break: normal;
+    hyphens: auto;
+}
+
+.menu-item-desc-row {
+    width: 100%;
+}
+
+.menu-item-desc {
+    margin: 0 0 10px 0;
+    font-size: 1em;
+    color: #3e2c18;
+    width: 100%;
+    word-break: break-word;
+    text-align: left;
+}
+
+.menu-item-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+    gap: 12px;
+}
+
+/* Mobile: todo apilado */
 @media (max-width: 700px) {
     .menu-items {
         padding: 0 4vw;
         gap: 16px;
     }
-    .menu-item {
+    .menu-item, .promo-item {
         width: 100%;
         min-width: 0;
         padding: 18px 12px;
+    }
+    .menu-item-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    .menu-img {
+        width: 100%;
+        height: 180px;
+        border-radius: 12px;
+    }
+    .menu-item-title, .menu-item-desc, .price {
+        text-align: left;
+        width: 100%;
     }
 }
 
@@ -466,67 +587,29 @@ footer {
     border-radius: 12px;
 }
 
+/* Asegura que el contenido interno no se desborde */
 .menu-item-content {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: flex-start;
+    box-sizing: border-box;
 }
 
 .menu-item-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 18px;
-    min-width: 0;
     width: 100%;
-}
-
-.menu-img {
-    width: 110px;
-    height: 110px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin: 0;
-    box-shadow: 0 2px 8px rgba(62,44,24,0.08);
-    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
 .menu-item-title {
-    margin: 0;
-    font-weight: 700;
-    flex: 1;
-    color: #a67c52;
-    font-size: 1.15em;
-    white-space: normal; /* Permite varias líneas */
-    overflow-wrap: break-word;
-    text-overflow: unset;
-}
-
-.price-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-    font-size: 0.98em;
-}
-
-.price {
-    color: #c49a6c;
-    font-weight: 600;
-    font-size: 0.98em;
-    margin-left: 0;
-}
-
-.price-unit {
-    font-size: 1em;
-}
-
-.menu-item-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
+    text-align: center;
     width: 100%;
-    gap: 12px;
+    margin: 0 0 8px 0;
+    word-break: normal;
+    hyphens: auto;
 }
 
 .menu-item-desc-row {
@@ -538,6 +621,17 @@ footer {
     font-size: 1em;
     color: #3e2c18;
     width: 100%;
+    word-break: break-word;
+    text-align: left;
+}
+
+.menu-item-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+    gap: 12px;
 }
 
 /* Mobile: todo apilado */
@@ -552,10 +646,19 @@ footer {
         height: 180px;
         border-radius: 12px;
     }
-    .menu-item-title, .price {
+    .menu-item-title, .menu-item-desc, .price {
         text-align: left;
         width: 100%;
     }
+}
+
+.price {
+    color: #c49a6c;
+    font-weight: 700;
+    font-size: 1.15em;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: inline-block;
 }
 
 /* --- SECCIÓN PASOS --- */
@@ -671,4 +774,116 @@ h1 { /* Solo aplica la fuente al elemento h1 */
 
 .pedido-pago-icon:hover {
     transform: scale(1.50);
+}
+
+/* --- SECCIÓN PROMOCIONES --- */
+.promociones {
+    transition: box-shadow 0.5s, transform 0.5s;
+    margin: 40px auto;
+    max-width: 900px;
+    background: #fff8ec;
+    border: 2px solid #c49a6c;
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(62,44,24,0.08);
+    padding: 0px 24px 10px 24px;
+    text-align: center;
+    transition: box-shadow 0.5s, transform 0.5s;
+}
+
+.promociones h2 {
+    color: #a67c52;
+    font-size: 1.35em;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+}
+
+.promo-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.promo-item {
+    border: 2px solid #c49a6c;
+    background: #fffcf0;
+    box-shadow: 0 4px 24px rgba(198,154,108,0.12);
+    position: relative;
+    width: 100%;         /* Ocupa todo el ancho de la columna */
+    min-width: 0;        /* Permite que el contenido se reduzca si es necesario */
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 24px 28px;  /* Igual que .menu-item */
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.promo-item::after {
+    content: "PROMO";
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #ca2e2e;
+    color: #ffffff;
+    font-size: 0.85em;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 8px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(198,154,108,0.12);
+}
+/* En mobile, que ocupen casi todo el ancho pero con margen */
+@media (max-width: 700px) {
+    .promo-items {
+        padding: 0 4vw;
+        gap: 16px;
+    }
+    .promo-item {
+        width: 100%;
+        min-width: 0;
+        padding: 18px 12px;
+    }
+}
+
+.promociones.visible {
+    box-shadow: 0 8px 32px rgba(198,154,108,0.25);
+    transform: scale(1.03);
+    border: 2.5px solid #c49a6c;
+    background: #fffbe9;
+    z-index: 2;
+}
+
+.carrito-modal {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: #ffffffde;
+    border: 2px solid #c49a6c;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(198,154,108,0.18);
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    font-size: 1.00em;
+    font-weight: 600;
+}
+
+.carrito-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.carrito-total-label {
+    color: #a67c52;
+}
+#carrito-total {
+    color: #3e2c18;
+    font-weight: bold;
+    font-size: 1.15em;
 }

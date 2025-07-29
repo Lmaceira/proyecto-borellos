@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
     });
+    document.getElementById('nav-promo').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('promo').scrollIntoView({ behavior: 'smooth' });
+    });
     document.getElementById('nav-pedido').addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById('haceTuPedido').scrollIntoView({ behavior: 'smooth' });
@@ -35,13 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             const menuItems = document.getElementById('menu-items');
+            const promoItems = document.getElementById('promo-items');
             menuItems.innerHTML = '';
+            promoItems.innerHTML = '';
+
             data.forEach(item => {
                 if (!item.disponible) return;
-                carrito[item.nombre] = 0; // Inicializa la cantidad en 0
-
+                carrito[item.nombre] = 0; 
                 const div = document.createElement('div');
-                div.className = 'menu-item';
+                div.className = item.promocion ? 'promo-item' : 'menu-item';
                 div.innerHTML = `
                     <div class="menu-item-content">
                         <div class="menu-item-row">
@@ -52,9 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="menu-item-desc">${item.descripcion}</p>
                         </div>
                         <div class="menu-item-actions">
-                            <div class="price-list">
-                                <span class="price price-unit">${item.precioUnidad || item.precio}</span>
-                            </div>
+                            <span class="price">
+                                ${item.precioUnidad ? item.precioUnidad : item.precio}
+                            </span>
                             <div class="quantity-selector">
                                 <button class="qty-btn" data-action="decrease">-</button>
                                 <span class="qty-value">0</span>
@@ -79,15 +85,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (qty > 0) qty--;
                     qtyValue.textContent = qty;
                     carrito[item.nombre] = qty; // Actualiza la variable
+                    actualizarTotalCarrito(); // Actualiza el total del carrito
                 });
                 btnIncrease.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (qty < item.stock) qty++;
                     qtyValue.textContent = qty;
                     carrito[item.nombre] = qty; // Actualiza la variable
+                    actualizarTotalCarrito(); // Actualiza el total del carrito
                 });
 
-                menuItems.appendChild(div);
+                if (item.promocion) {
+                    promoItems.appendChild(div);
+                } else {
+                    menuItems.appendChild(div);
+                }
             });
 
             // Puedes acceder a las cantidades seleccionadas en cualquier momento:
@@ -160,4 +172,55 @@ document.addEventListener('DOMContentLoaded', function() {
             this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
         });
     }
+
+    // Efecto de visibilidad para promociones
+    const promoSection = document.querySelector('.promociones');
+    if (promoSection) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        promoSection.classList.add('visible');
+                    } else {
+                        promoSection.classList.remove('visible');
+                    }
+                });
+            },
+            { threshold: 0.3 }
+        );
+        observer.observe(promoSection);
+    }
+
+    function actualizarTotalCarrito() {
+        let total = 0;
+        for (const [nombre, cantidad] of Object.entries(carrito)) {
+            if (cantidad > 0) {
+                // Busca el producto en el JSON cargado
+                const producto = productos.find(p => p.nombre === nombre);
+                if (producto) {
+                    // Usa precioUnidad si existe, si no precio
+                    let precio = 0;
+                    if (producto.precioUnidad) {
+                        precio = parseFloat(producto.precioUnidad.replace(/[^\d,\.]/g, '').replace(',', '.'));
+                    } else if (producto.precio) {
+                        precio = parseFloat(producto.precio.replace(/[^\d,\.]/g, '').replace(',', '.'));
+                    }
+                    total += precio * cantidad;
+                }
+            }
+        }
+        document.getElementById('carrito-total').textContent = total > 0 ? total.toFixed(2) + "€" : "0€";
+    }
+
+    // Guarda los productos al cargar el menú
+    let productos = [];
+    fetch('menu.json')
+        .then(response => response.json())
+        .then(data => {
+            productos = data;
+            // ...tu código para renderizar productos...
+            // En el evento de los botones + y -:
+            // Después de actualizar carrito[item.nombre], llama:
+            // actualizarTotalCarrito();
+        });
 });

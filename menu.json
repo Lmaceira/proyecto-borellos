@@ -5,7 +5,8 @@
     "precioUnidad": "1,50€ unidad",
     "imagen": "resources/medialunas_manteca.jpg",
     "disponible": true,
-    "stock": 8
+    "stock": 8,
+    "promocion": false
   },
   {
     "nombre": "Medialunas de grasa",
@@ -13,7 +14,8 @@
     "precio": "A confirmar",
     "imagen": "resources/medialunas_grasa.jpg",
     "disponible": false,
-    "stock": 48
+    "stock": 48,
+    "promocion": false
   },
   {
     "nombre": "Criollitos de hojaldre",
@@ -21,7 +23,8 @@
     "precio": "A confirmar",
     "imagen": "resources/medialunas_grasa.jpg",
     "disponible": false,
-    "stock": 48
+    "stock": 48,
+    "promocion": false
   },
   {
     "nombre": "Chipa",
@@ -29,7 +32,8 @@
     "precio": "A confirmar",
     "imagen": "resources/medialunas_grasa.jpg",
     "disponible": false,
-    "stock": 48
+    "stock": 48,
+    "promocion": false
   },
   {
     "nombre": "Alfajores marplatenses",
@@ -37,7 +41,8 @@
     "precio": "2,00€ unidad",
     "imagen": "resources/alfajores_marplatenses.jpg",
     "disponible": true,
-    "stock": 48
+    "stock": 48,
+    "promocion": false
   },
   {
     "nombre": "Alfajores de pistacho",
@@ -45,7 +50,8 @@
     "precio": "2,50€ unidad",
     "imagen": "resources/alfajores_pistacho.jpg",
     "disponible": true,
-    "stock": 48
+    "stock": 48,
+    "promocion": false
   },
   {
     "nombre": "Alfajores de maicena",
@@ -53,6 +59,34 @@
     "precio": "2,00€ unidad",
     "imagen": "resources/alfajores_maicena.jpg",
     "disponible": true,
-    "stock": 48
+    "stock": 48,
+    "promocion": false
+  },
+  {
+    "nombre": "Media docena de medialunas",
+    "descripcion": "6 medialunas recién horneadas a precio especial.",
+    "precio": "7,50€",
+    "imagen": "resources/medialunas_manteca.jpg",
+    "disponible": true,
+    "stock": 4,
+    "promocion": true
+  },
+  {
+    "nombre": "Docena de medialunas",
+    "descripcion": "12 medialunas recién horneadas a precio especial.",
+    "precio": "14,00€",
+    "imagen": "resources/medialunas_manteca.jpg",
+    "disponible": true,
+    "stock": 2,
+    "promocion": true
+  },
+  {
+    "nombre": "Pack degustación Borellito's",
+    "descripcion": "Incluye medialunas, alfajores y chipá para probar lo mejor de Argentina.",
+    "precio": "9,00€",
+    "imagen": "resources/degustacion.jpg",
+    "disponible": true,
+    "stock": 4,
+    "promocion": true
   }
 ]
