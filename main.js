@@ -85,12 +85,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (qty > 0) qty--;
                     qtyValue.textContent = qty;
                     carrito[item.nombre] = qty; // Actualiza la variable
+                    actualizarTotalCarrito(); // Actualiza el total del carrito
                 });
                 btnIncrease.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (qty < item.stock) qty++;
                     qtyValue.textContent = qty;
                     carrito[item.nombre] = qty; // Actualiza la variable
+                    actualizarTotalCarrito(); // Actualiza el total del carrito
                 });
 
                 if (item.promocion) {
@@ -188,4 +190,37 @@ document.addEventListener('DOMContentLoaded', function() {
         );
         observer.observe(promoSection);
     }
+
+    function actualizarTotalCarrito() {
+        let total = 0;
+        for (const [nombre, cantidad] of Object.entries(carrito)) {
+            if (cantidad > 0) {
+                // Busca el producto en el JSON cargado
+                const producto = productos.find(p => p.nombre === nombre);
+                if (producto) {
+                    // Usa precioUnidad si existe, si no precio
+                    let precio = 0;
+                    if (producto.precioUnidad) {
+                        precio = parseFloat(producto.precioUnidad.replace(/[^\d,\.]/g, '').replace(',', '.'));
+                    } else if (producto.precio) {
+                        precio = parseFloat(producto.precio.replace(/[^\d,\.]/g, '').replace(',', '.'));
+                    }
+                    total += precio * cantidad;
+                }
+            }
+        }
+        document.getElementById('carrito-total').textContent = total > 0 ? total.toFixed(2) + "€" : "0€";
+    }
+
+    // Guarda los productos al cargar el menú
+    let productos = [];
+    fetch('menu.json')
+        .then(response => response.json())
+        .then(data => {
+            productos = data;
+            // ...tu código para renderizar productos...
+            // En el evento de los botones + y -:
+            // Después de actualizar carrito[item.nombre], llama:
+            // actualizarTotalCarrito();
+        });
 });
