@@ -68,8 +68,8 @@
                 <div class="pedido-item">
                     <img src="resources/whatsapp.png" alt="WhatsApp" class="pedido-icon">
                     <span class="pedido-label">WhatsApp:</span>
-                    <span class="pedido-info">+34 664 097 967</span>
-                    <a class="pedido-btn" id="whatsapp-btn" href="https://wa.me/34664097967" target="_blank">Contactar por WhatsApp</a>
+                    <span class="pedido-info">+34 611033550</span>
+                    <a class="pedido-btn" id="whatsapp-btn" href="https://wa.me/34611033550" target="_blank">Contactar por WhatsApp</a>
                 </div>
                 <div class="pedido-pagos">
                     <span class="pedido-pagos-titulo">Aceptamos pagos en efectivo y Bizum</span>
@@ -105,6 +105,30 @@
         <p>&copy; 2025 Borello's. Todos los derechos reservados.</p>
         <p>Contáctanos: borellosbakery@gmail.com</p>
     </footer>
-    <script src="main.js"></script>
+    <div id="stock-modal" class="modal hidden">
+        <div class="modal-content stock-modal-content">
+            <div class="modal-header">
+                <button id="close-stock-modal" class="modal-close">&times;</button>
+            </div>
+            <div id="stock-modal-message" class="modal-body"></div>
+        </div>
+    </div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AZtaSyDpMF42cq18_ahFb7pKoGffMeGpaQflFyw",
+    authDomain: "borellos.firebaseapp.com",
+    projectId: "borellos",
+    storageBucket: "borellos.appspot.com",
+    messagingSenderId: "540807515613",
+    appId: "1:540807515613:web:8a68f3504fa63738736234",
+    measurementId: "G-KH6VXZQRSE"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<script src="main.js"></script>
+<script src="pedido-frontend.js"></script>
 </body>
 </html>
