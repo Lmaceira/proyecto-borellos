@@ -1,0 +1,34 @@
+{
+  "name": "proyecto-borellos",
+  "version": "1.0.0",
+  "description": "Sistema de pedidos online para Borellos con gestión de stock en tiempo real",
+  "main": "index.html",
+  "scripts": {
+    "dev": "firebase serve --only hosting",
+    "build": "echo 'Proyecto estático - no requiere build'",
+    "deploy": "firebase deploy",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "test": "echo 'Tests pendientes de implementar'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lmaceira/proyecto-borellos.git"
+  },
+  "keywords": [
+    "firebase",
+    "restaurant",
+    "ordering-system",
+    "stock-management",
+    "javascript",
+    "firestore"
+  ],
+  "author": "Lmaceira",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

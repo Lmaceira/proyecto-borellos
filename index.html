@@ -105,6 +105,22 @@
         <p>&copy; 2025 Borello's. Todos los derechos reservados.</p>
         <p>Contáctanos: borellosbakery@gmail.com</p>
     </footer>
-    <script src="main.js"></script>
+    <div id="stock-modal" class="modal hidden">
+        <div class="modal-content stock-modal-content">
+            <div class="modal-header">
+                <button id="close-stock-modal" class="modal-close">&times;</button>
+            </div>
+            <div id="stock-modal-message" class="modal-body"></div>
+        </div>
+    </div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<script src="main.js"></script>
+<script src="pedido-frontend.js"></script>
 </body>
 </html>

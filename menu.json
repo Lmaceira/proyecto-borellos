@@ -1,14 +1,5 @@
 [
   {
-    "nombre": "Medialunas de mantequilla",
-    "descripcion": "Un clasico argentino, medialunas recién horneadas hechas 100% con mantequilla.",
-    "precioUnidad": "1,50€ unidad",
-    "imagen": "resources/medialunas_manteca.jpg",
-    "disponible": true,
-    "stock": 8,
-    "promocion": false
-  },
-  {
     "nombre": "Medialunas de grasa",
     "descripcion": "Dulce o salado? Podes elegir. Medialunas super crocantes hechas con grasa, para mas placer.",
     "precio": "A confirmar",
@@ -36,15 +27,6 @@
     "promocion": false
   },
   {
-    "nombre": "Alfajores marplatenses",
-    "descripcion": "Los mejores alfajores del mundo, con dulce de leche y chocolate. ¡No te los podés perder!",
-    "precio": "2,00€ unidad",
-    "imagen": "resources/alfajores_marplatenses.jpg",
-    "disponible": true,
-    "stock": 48,
-    "promocion": false
-  },
-  {
     "nombre": "Alfajores de pistacho",
     "descripcion": "Alfajores con un toque especial de pistacho, ideales para los amantes de los sabores únicos.",
     "precio": "2,50€ unidad",
@@ -61,15 +43,6 @@
     "disponible": true,
     "stock": 48,
     "promocion": false
-  },
-  {
-    "nombre": "Media docena de medialunas",
-    "descripcion": "6 medialunas recién horneadas a precio especial.",
-    "precio": "7,50€",
-    "imagen": "resources/medialunas_manteca.jpg",
-    "disponible": true,
-    "stock": 4,
-    "promocion": true
   },
   {
     "nombre": "Docena de medialunas",

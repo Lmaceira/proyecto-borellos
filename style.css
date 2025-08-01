@@ -1,3 +1,133 @@
+/* --- MODAL TICKET DE PEDIDO --- */
+.ticket-modal {
+  max-width: 400px;
+  padding: 2rem 1.2rem 1.2rem 1.2rem;
+}
+.ticket-lista {
+  margin-bottom: 1.2rem;
+}
+.ticket-item {
+  background: #fff3e0;
+  border-radius: 8px;
+  margin-bottom: 0.7em;
+  padding: 0.7em 1em 0.5em 1em;
+  box-shadow: 0 1px 4px rgba(184,92,43,0.07);
+}
+.ticket-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ticket-prod {
+  font-weight: bold;
+  color: #b85c2b;
+  font-size: 1.08em;
+}
+.ticket-cant {
+  color: #6d3b1a;
+  font-size: 1em;
+}
+.ticket-precios {
+  font-size: 0.98em;
+  color: #a04a1a;
+  margin-top: 0.2em;
+}
+.ticket-precio-unit {
+  opacity: 0.8;
+}
+.ticket-subtotal {
+  font-weight: bold;
+  margin-left: 1.2em;
+}
+.ticket-total {
+  text-align: right;
+  font-size: 1.15rem;
+  color: #b85c2b;
+  margin-bottom: 1.2rem;
+  margin-top: 0.7rem;
+}
+.ticket-vacio {
+  color: #a04a1a;
+  text-align: center;
+  padding: 1em 0;
+}
+/* --- MODAL DE PEDIDO --- */
+.pedido-modal-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pedido-modal {
+  background: #fff8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 320px;
+  max-width: 95vw;
+  color: #6d3b1a;
+  font-family: inherit;
+  position: relative;
+}
+.pedido-modal h3 {
+  margin-top: 0;
+  color: #b85c2b;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+.pedido-modal-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+.pedido-modal-tabla th, .pedido-modal-tabla td {
+  border-bottom: 1px solid #e0c3a0;
+  padding: 0.5em 0.7em;
+  text-align: left;
+}
+.pedido-modal-tabla th {
+  background: #ffe3c2;
+  color: #a04a1a;
+}
+.pedido-modal-total {
+  text-align: right;
+  font-size: 1.1rem;
+  color: #b85c2b;
+  margin-bottom: 1.2rem;
+}
+.pedido-modal-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+#pedido-modal-aceptar, #pedido-modal-cancelar {
+  padding: 0.5em 1.2em;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+#pedido-modal-aceptar {
+  background: #b85c2b;
+  color: #fff8f0;
+  font-weight: bold;
+}
+#pedido-modal-aceptar:hover {
+  background: #a04a1a;
+}
+#pedido-modal-cancelar {
+  background: #ffe3c2;
+  color: #b85c2b;
+}
+#pedido-modal-cancelar:hover {
+  background: #f5d1a0;
+}
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
@@ -886,4 +1016,162 @@ h1 { /* Solo aplica la fuente al elemento h1 */
     color: #3e2c18;
     font-weight: bold;
     font-size: 1.15em;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* --- MODAL DE STOCK --- */
+.stock-modal-content {
+    background: #fff;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(62,44,24,0.2);
+    border: 2px solid #c49a6c;
+    position: relative;
+    padding: 0;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #c49a6c 0%, #a67c52 100%);
+    padding: 20px;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: transform 0.2s;
+}
+
+.modal-close:hover {
+    transform: scale(1.2);
+}
+
+.modal-body {
+    padding: 30px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.modal-body h3 {
+    color: #e74c3c;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.emoji {
+    vertical-align: middle;
+    font-size: 1.4em; 
+}
+
+.modal-body p {
+    color: #2c3e50;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.modal-body h4 {
+    color: #2c3e50;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.modal-body ul {
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.modal-body li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #dee2e6;
+    align-items: center;
+}
+
+.modal-body li:last-child {
+    border-bottom: none;
+}
+
+.modal-body span:first-child {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.stock-badge {
+    background: #28a745;
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.whatsapp-btn {
+    background: #25d366;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    margin-top: 10px;
+}
+
+.whatsapp-btn:hover {
+    background: #20b858;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.stock-container {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #e9ecef;
+}
+
+.hidden {
+    display: none;
 }
