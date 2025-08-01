@@ -1,7 +1,7 @@
 
-// Configuración de endpoints (carga desde config.js)
-const PEDIDO_ENDPOINT = window.APP_CONFIG?.PEDIDO_ENDPOINT || 'https://crearpedido-dacnykrkba-uc.a.run.app';
-const PEDIDO_API_KEY = window.APP_CONFIG?.PEDIDO_API_KEY || 'ClaveEnviarPedido1234';
+// Configuración de endpoints (carga desde config.js con fallbacks seguros)
+const PEDIDO_ENDPOINT = (window.APP_CONFIG && window.APP_CONFIG.PEDIDO_ENDPOINT) || 'https://crearpedido-dacnykrkba-uc.a.run.app';
+const PEDIDO_API_KEY = (window.APP_CONFIG && window.APP_CONFIG.PEDIDO_API_KEY) || 'Br3ll0s_P3d1d0_2025_Pr0d_Av1l4_S3cur3_K3y_456';
 // Función para mostrar el modal de confirmación de pedido
 
 

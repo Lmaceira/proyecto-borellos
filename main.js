@@ -1,6 +1,6 @@
-// Configuración de endpoints (carga desde config.js)
-const STOCK_ENDPOINT = window.APP_CONFIG?.STOCK_ENDPOINT || 'https://actualizarstock-dacnykrkba-uc.a.run.app';
-const STOCK_API_KEY = window.APP_CONFIG?.STOCK_API_KEY || 'ClaveActualizarStock1234';
+// Configuración de endpoints (carga desde config.js con fallbacks seguros)
+const STOCK_ENDPOINT = (window.APP_CONFIG && window.APP_CONFIG.STOCK_ENDPOINT) || 'https://actualizarstock-dacnykrkba-uc.a.run.app';
+const STOCK_API_KEY = (window.APP_CONFIG && window.APP_CONFIG.STOCK_API_KEY) || 'Br3ll0s_St0ck_2025_Pr0d_Av1l4_S3cur3_K3y_789';
 
 document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.querySelector('.nav-toggle');
