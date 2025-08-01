@@ -1,6 +1,7 @@
 
-// Configura aquí tu endpoint (ahora debe ser tu backend proxy)
-const PEDIDO_ENDPOINT = '/api/enviarPedido'; // Cambia esto a tu endpoint backend
+// Configuración de endpoints (carga desde config.js)
+const PEDIDO_ENDPOINT = window.APP_CONFIG?.PEDIDO_ENDPOINT || 'https://crearpedido-dacnykrkba-uc.a.run.app';
+const PEDIDO_API_KEY = window.APP_CONFIG?.PEDIDO_API_KEY || 'ClaveEnviarPedido1234';
 // Función para mostrar el modal de confirmación de pedido
 
 

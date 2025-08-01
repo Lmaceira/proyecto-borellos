@@ -5,12 +5,17 @@
   "main": "index.html",
   "scripts": {
     "dev": "firebase serve --only hosting",
+    "dev:functions": "firebase emulators:start",
     "build": "echo 'Proyecto estático - no requiere build'",
     "deploy": "firebase deploy",
     "deploy:hosting": "firebase deploy --only hosting",
     "deploy:functions": "firebase deploy --only functions",
+    "deploy:prod": "npm run deploy",
     "logs": "firebase functions:log",
-    "test": "echo 'Tests pendientes de implementar'"
+    "logs:live": "firebase functions:log --follow",
+    "test": "echo 'Tests pendientes de implementar'",
+    "setup": "cp .env.example .env && cp .env.example functions/.env && echo 'Archivos .env creados. Configura tus variables de entorno.'",
+    "clean": "firebase functions:delete --force && npm run deploy:functions"
   },
   "repository": {
     "type": "git",

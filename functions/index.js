@@ -1,4 +1,7 @@
 /* eslint-disable */
+// Cargar variables de entorno
+require('dotenv').config();
+
 /**
  * Import function triggers from their respective submodules:
  *

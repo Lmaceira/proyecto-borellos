@@ -65,12 +65,21 @@ node_modules/
 # dotenv environment variables file
 .env
 .env.local
+.env.development
+.env.test
 .env.production
+functions/.env
+
+# Frontend configuration (para máxima seguridad en producción)
+config.js
 
 # Firebase service account keys and sensitive files
 *-firebase-adminsdk-*.json
 service-account-key.json
 firebase-key.json
+
+# Firebase configuration (comentar si quieres commitear la config)
+# firebase-config.js
 
 # Firebase runtime config
 functions/.runtimeconfig.json

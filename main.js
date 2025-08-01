@@ -1,5 +1,6 @@
-// Configura aquí tu endpoint y clave
-const STOCK_ENDPOINT = '/api/actualizarStock'; // Use your server-side proxy endpoint
+// Configuración de endpoints (carga desde config.js)
+const STOCK_ENDPOINT = window.APP_CONFIG?.STOCK_ENDPOINT || 'https://actualizarstock-dacnykrkba-uc.a.run.app';
+const STOCK_API_KEY = window.APP_CONFIG?.STOCK_API_KEY || 'ClaveActualizarStock1234';
 
 document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.querySelector('.nav-toggle');
