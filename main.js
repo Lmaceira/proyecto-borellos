@@ -370,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         precio = parseFloat(producto.precioUnidad.replace(/[^\d,\.]/g, '').replace(',', '.'));
                     } else if (typeof producto.precio === 'number') {
                         precio = producto.precio;
+
                     } else if (producto.precio) {
                         precio = parseFloat(producto.precio.replace(/[^\d,\.]/g, '').replace(',', '.'));
                     }
@@ -464,4 +465,3 @@ function mostrarModalStock(mensaje, stockDisponible = null) {
         modal.classList.add('hidden');
     });
 }
-
