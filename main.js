@@ -1,6 +1,5 @@
 // Configura aquí tu endpoint y clave
-const STOCK_ENDPOINT = 'https://europe-west3-borellos.cloudfunctions.net/actualizarStock';
-const STOCK_API_KEY = 'ClaveActualizarStock1234';
+const STOCK_ENDPOINT = '/api/actualizarStock'; // Use your server-side proxy endpoint
 
 document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.querySelector('.nav-toggle');
