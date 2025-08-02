@@ -54,6 +54,48 @@
     <link rel="icon" type="image/png" href="resources/second_logo.png">
     <link rel="apple-touch-icon" href="resources/second_logo.png">
     
+    <!-- Google Analytics (se carga solo si el usuario acepta cookies) -->
+    <script>
+        // Función para cargar Google Analytics
+        function loadGoogleAnalytics() {
+            if (window.firebaseConfig && window.firebaseConfig.measurementId) {
+                // Cargar gtag solo si no está cargado
+                if (!window.gtag) {
+                    const script = document.createElement('script');
+                    script.async = true;
+                    script.src = `https://www.googletagmanager.com/gtag/js?id=${window.firebaseConfig.measurementId}`;
+                    document.head.appendChild(script);
+                    
+                    script.onload = function() {
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        window.gtag = gtag;
+                        gtag('js', new Date());
+                        gtag('config', window.firebaseConfig.measurementId, {
+                            anonymize_ip: true,
+                            respect_dnt: true,
+                            allow_google_signals: false,
+                            cookie_expires: 63072000 // 2 años
+                        });
+                        console.log('✅ Google Analytics cargado con privacidad');
+                    };
+                }
+            }
+        }
+        
+        // Función para desactivar Google Analytics
+        function disableGoogleAnalytics() {
+            if (window.gtag && window.firebaseConfig && window.firebaseConfig.measurementId) {
+                window[`ga-disable-${window.firebaseConfig.measurementId}`] = true;
+                console.log('❌ Google Analytics desactivado');
+            }
+        }
+        
+        // Hacer funciones disponibles globalmente
+        window.loadGoogleAnalytics = loadGoogleAnalytics;
+        window.disableGoogleAnalytics = disableGoogleAnalytics;
+    </script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -150,6 +192,57 @@
             </div>
         </section>
     </main>
+    
+    <!-- Banner de Cookies -->
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <span class="cookie-icon">🍪</span>
+                <p>Utilizamos cookies técnicas necesarias y Google Analytics para mejorar tu experiencia (datos anónimos).</p>
+            </div>
+            <div class="cookie-actions">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Aceptar todas</button>
+                <button id="cookie-essential" class="cookie-btn cookie-essential">Solo esenciales</button>
+                <button id="cookie-info" class="cookie-btn cookie-info">Más información</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de información de cookies -->
+    <div id="cookie-info-modal" class="modal hidden">
+        <div class="modal-content cookie-modal-content">
+            <div class="modal-header">
+                <h3>Información sobre cookies</h3>
+                <button id="close-cookie-modal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>¿Qué son las cookies?</h4>
+                <p>Las cookies son pequeños archivos que se almacenan en tu dispositivo para mejorar tu experiencia de navegación.</p>
+                
+                <h4>Cookies que utilizamos:</h4>
+                <div class="cookie-types">
+                    <div class="cookie-type">
+                        <h5>🔧 Cookies técnicas (esenciales)</h5>
+                        <p>Necesarias para el funcionamiento básico del sitio web, gestión del carrito y Firebase.</p>
+                        <span class="cookie-required">Siempre activas</span>
+                    </div>
+                    <div class="cookie-type">
+                        <h5>📊 Cookies de análisis (Google Analytics)</h5>
+                        <p>Nos ayudan a entender cómo utilizas el sitio para mejorarlo. Datos anónimos y respetuosos con la privacidad.</p>
+                        <label class="cookie-toggle">
+                            <input type="checkbox" id="analytics-toggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="cookie-modal-actions">
+                    <button id="save-cookie-preferences" class="cookie-btn cookie-accept">Guardar preferencias</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="carrito-modal" class="carrito-modal">
         <img src="resources/basket1.png" alt="Carrito" class="carrito-icon">
         <span class="carrito-total-label">Total:</span>
@@ -158,6 +251,7 @@
     <footer>
         <p>&copy; 2025 Borello's. Todos los derechos reservados.</p>
         <p>Contáctanos: borellosbakery@gmail.com</p>
+        <p><a href="privacidad.html" target="_blank" style="color: #c49a6c; text-decoration: none;">Política de Privacidad y Cookies</a></p>
     </footer>
     <div id="stock-modal" class="modal hidden">
         <div class="modal-content stock-modal-content">
@@ -175,6 +269,7 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 </script>
+<script src="cookie-manager.js"></script>
 <script src="main.js"></script>
 <script src="pedido-frontend.js"></script>
 </body>

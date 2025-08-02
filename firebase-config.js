@@ -6,7 +6,7 @@ const firebaseConfig = {
   storageBucket: "borellos.appspot.com",
   messagingSenderId: "540807515613",
   appId: "1:540807515613:web:8a68f3504fa6373873634",
-  measurementId: "G-KH6VXZQRSE"
+  measurementId: "G-GP50VVWQ5S"
 };
 
 // Configuración de API para producción (temporal hasta implementar backend proxy)
