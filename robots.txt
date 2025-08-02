@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://borellos.web.app/sitemap.xml
+
+# Specific pages for SEO
+Allow: /#menu
+Allow: /#promo
+Allow: /#haceTuPedido
+Allow: /#about
+
+# Block unnecessary files
+Disallow: /functions/
+Disallow: /.firebase/
+Disallow: /node_modules/
+Disallow: /scripts/
+
+# Allow important resources
+Allow: /resources/
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg

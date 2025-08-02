@@ -1175,3 +1175,88 @@ h1 { /* Solo aplica la fuente al elemento h1 */
 .hidden {
     display: none;
 }
+
+/* Mensaje de productos/promociones no disponibles */
+.no-disponible-mensaje {
+    background: linear-gradient(120deg, #f5e6c8 60%, #e0d6c3 100%);
+    border: 2px solid #c49a6c;
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(62,44,24,0.08);
+    padding: 32px 28px;
+    margin-bottom: 24px;
+    text-align: center;
+    grid-column: 1 / -1; /* Ocupa toda la fila en el grid */
+}
+
+.no-disponible-content h3 {
+    margin: 0 0 16px 0;
+    color: #3e2c18;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.no-disponible-content p {
+    margin: 0;
+    color: #3e2c18;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+.no-disponible-content a {
+    color: #c49a6c;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.no-disponible-content a:hover {
+    color: #b85c2b;
+    border-bottom-color: #b85c2b;
+}
+
+@media (max-width: 700px) {
+    .no-disponible-mensaje {
+        padding: 24px 16px;
+        margin-bottom: 16px;
+    }
+    
+    .no-disponible-content h3 {
+        font-size: 1.2em;
+    }
+    
+    .no-disponible-content p {
+        font-size: 1em;
+    }
+}
+
+/* Optimizaciones para Core Web Vitals */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Preload fonts for better performance */
+@font-face {
+    font-family: 'Velour';
+    src: url('resources/fonts/Velour-SemiBold.woff2') format('woff2'),
+         url('resources/fonts/Velour-SemiBold.woff') format('woff');
+    font-display: swap;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 10000;
+}
+
+.skip-link:focus {
+    top: 6px;
+}

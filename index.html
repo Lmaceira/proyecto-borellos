@@ -2,45 +2,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borello's 🥐🧉</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Borello's Ávila 🥐 | Alfajores y Medialunas Argentinas | Pedidos Online</title>
+    <meta name="description" content="Borello's trae el auténtico sabor argentino a Ávila. Alfajores artesanales, medialunas de manteca y productos argentinos frescos. Pedidos online con entrega miércoles y sábados.">
+    <meta name="keywords" content="alfajores argentinos Ávila, medialunas manteca, productos argentinos Ávila, bakery argentina, pedidos online Ávila, dulces argentinos">
+    <meta name="author" content="Borello's Bakery">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="Borello's Ávila - Alfajores y Medialunas Argentinas">
+    <meta property="og:description" content="El auténtico sabor argentino en Ávila. Alfajores artesanales, medialunas de manteca y más productos argentinos frescos.">
+    <meta property="og:image" content="https://borellos.web.app/resources/second_logo.png">
+    <meta property="og:url" content="https://borellos.web.app">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="Borello's Bakery">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Borello's Ávila - Alfajores y Medialunas Argentinas">
+    <meta name="twitter:description" content="El auténtico sabor argentino en Ávila. Alfajores artesanales, medialunas de manteca y más productos argentinos frescos.">
+    <meta name="twitter:image" content="https://borellos.web.app/resources/second_logo.png">
+    
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Bakery",
+      "name": "Borello's",
+      "description": "Bakery argentina especializada en alfajores artesanales y medialunas de manteca en Ávila",
+      "url": "https://borellos.web.app",
+      "telephone": "+34-611-033-550",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ávila",
+        "addressCountry": "ES"
+      },
+      "servesCuisine": "Argentina",
+      "priceRange": "€€",
+      "openingHours": [
+        "We 15:00-20:00",
+        "Sa 09:00-14:00"
+      ],
+      "paymentAccepted": ["Cash", "Bizum"],
+      "currenciesAccepted": "EUR"
+    }
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="resources/second_logo.png">
+    <link rel="apple-touch-icon" href="resources/second_logo.png">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a href="#main" class="skip-link">Saltar al contenido principal</a>
     <header>
         <h1>Borello's</h1>
-        <p>El sabor de Argentina ha llegado a Ávila</p>
+        <p>El auténtico sabor de Argentina ha llegado a Ávila</p>
         <div class="logo-wrapper">
-            <img src="resources/second_logo.png" alt="Borello's Logo" class="logo">
+            <img src="resources/second_logo.png" alt="Borello's Bakery - Logo de panadería argentina en Ávila" class="logo">
         </div>
-        <nav>
-            <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+        <nav aria-label="Navegación principal">
+            <button class="nav-toggle" aria-label="Abrir menú de navegación">&#9776;</button>
             <ul class="nav-list">
                 <li><a href="#home" id="nav-inicio">Inicio</a></li>
-                <li><a href="#menu" id="nav-menu">Menú</a></li>
-                <li><a href="#promo" id="nav-promo">Promociones</a></li>
-                <li><a href="#haceTuPedido" id="nav-pedido">Hacé tu pedido</a></li>
+                <li><a href="#menu" id="nav-menu">Productos Argentinos</a></li>
+                <li><a href="#promo" id="nav-promo">Promociones Especiales</a></li>
+                <li><a href="#haceTuPedido" id="nav-pedido">Hacé tu pedido online</a></li>
             </ul>
         </nav>
     </header>
-    <main>
+    <main id="main">
         <section id="menu" class="menu">
-            <h2 >Nuestro menú de esta semana</h2>
+            <h2>Nuestro menú semanal</h2>
             <div class="menu-items" id="menu-items">
                 <!-- Los productos se cargarán aquí dinámicamente -->
             </div>
         </section>
         <section id="promo" class="promociones">
-            <h2>Promociones</h2>
+            <h2>Promociones especiales</h2>
             <div class="promo-items" id="promo-items">
                 <!-- Las promociones se cargarán aquí dinámicamente -->
             </div>
         </section>
         <!-- NUEVA SECCIÓN DE PEDIDO -->
         <section class="pedido">
-            <h2 id="haceTuPedido">Como hacer tu pedido</h2>
+            <h2 id="haceTuPedido">Cómo hacer tu pedido online</h2>
+            <p>Proceso simple para disfrutar de nuestros productos argentinos en Ávila:</p>
             <ul class="pedido-pasos">
-                <li>Cada lunes, descubri nuestro stock fresco de la semana.</li>
-                <li>Elegí lo que mas te gusta.</li>
+                <li>Cada lunes, descubrí nuestro stock fresco semanal.</li>
+                <li>Elegí tus alfajores, medialunas o productos favoritos.</li>
                 <li>
                     Indícanos qué día preferis recibirlo:
                     <select id="dia-entrega" class="pedido-select">
@@ -66,31 +119,32 @@
             </ul>
             <div class="pedido-contactos">
                 <div class="pedido-item">
-                    <img src="resources/whatsapp.png" alt="WhatsApp" class="pedido-icon">
-                    <span class="pedido-label">WhatsApp:</span>
+                    <img src="resources/whatsapp.png" alt="Contactar por WhatsApp para pedidos" class="pedido-icon">
+                    <span class="pedido-label">WhatsApp para pedidos:</span>
                     <span class="pedido-info">+34 611 033 550</span>
-                    <a class="pedido-btn" id="whatsapp-btn" href="https://wa.me/34611033550" target="_blank">Contactar por WhatsApp</a>
+                    <a class="pedido-btn" id="whatsapp-btn" href="https://wa.me/34611033550" target="_blank" rel="noopener">Contactar por WhatsApp</a>
                 </div>
                 <div class="pedido-pagos">
                     <span class="pedido-pagos-titulo">Aceptamos pagos en efectivo y Bizum</span>
                     <div class="pedido-pagos-iconos">
-                        <img src="resources/efectivo.png" alt="Efectivo" class="pedido-pago-icon">
-                        <img src="resources/logotipo-bizum.jpg" alt="Bizum" class="pedido-pago-icon">
+                        <img src="resources/efectivo.png" alt="Pago en efectivo aceptado" class="pedido-pago-icon">
+                        <img src="resources/logotipo-bizum.jpg" alt="Pago con Bizum aceptado" class="pedido-pago-icon">
                     </div>
                 </div>
             </div>
         </section>
         <section class="about">
             <h2 id="about">Sobre Borello's</h2>
-            <p>En Borello's ofrecemos una variedad de productos argentinos auténticos, desde medialunas hasta alfajores, todos hechos con amor y dedicación. Nuestro objetivo es compartir un pedacito de Argentina.</p>
+            <p>En Borello's ofrecemos una variedad de productos argentinos auténticos en Ávila, desde medialunas de manteca hasta alfajores artesanales, todos hechos con amor y dedicación. Nuestro objetivo es compartir un pedacito de Argentina en el corazón de Castilla y León.</p>
+            <p>Especializados en alfajores de maicena, alfajores marplatenses y medialunas de manteca frescas. Entregamos pedidos los miércoles por la tarde y sábados por la mañana en Ávila.</p>
             <div class="pedido-redes">
-                <span class="pedido-redes-titulo">Seguinos en nuestras redes</span>
+                <span class="pedido-redes-titulo">Seguinos en nuestras redes sociales</span>
                 <div class="pedido-redes-iconos">
-                    <a href="https://instagram.com/borellosbakery" target="_blank">
-                        <img src="resources/instagram.png" alt="Instagram" class="pedido-icon">
+                    <a href="https://instagram.com/borellosbakery" target="_blank" rel="noopener" aria-label="Síguenos en Instagram">
+                        <img src="resources/instagram.png" alt="Instagram Borello's Bakery" class="pedido-icon">
                     </a>
-                    <a href="https://www.facebook.com/profile.php?id=61578418115936" target="_blank">
-                        <img src="resources/facebook.png" alt="Facebook" class="pedido-icon">
+                    <a href="https://www.facebook.com/profile.php?id=61578418115936" target="_blank" rel="noopener" aria-label="Síguenos en Facebook">
+                        <img src="resources/facebook.png" alt="Facebook Borello's Bakery" class="pedido-icon">
                     </a>
                 </div>
             </div>

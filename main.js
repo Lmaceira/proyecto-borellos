@@ -153,6 +153,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Guardar productos ANTES de crear la UI
         productos = data;
         
+        // Filtrar productos disponibles
+        const productosDisponibles = data.filter(item => item.disponible);
+        const productosNormales = productosDisponibles.filter(item => !item.promocion);
+        const promociones = productosDisponibles.filter(item => item.promocion);
+        
+        // Mostrar mensaje si no hay productos normales
+        if (productosNormales.length === 0) {
+            mostrarMensajeNoDisponible(menuItems, 'productos');
+        }
+        
+        // Mostrar mensaje si no hay promociones
+        if (promociones.length === 0) {
+            mostrarMensajeNoDisponible(promoItems, 'promociones');
+        }
+        
         data.forEach(item => {
             if (!item.disponible) return;
             carrito[item.id] = 0; // Usar productoId internamente
@@ -263,14 +278,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Obtener nombre y día
             const nombreInput = document.getElementById('nombre-usuario');
-            const nombre = nombreInput && nombreInput.value.trim() ? nombreInput.value.trim() : "[Tu nombre]";
+            const nombre = nombreInput && nombreInput.value.trim() ? nombreInput.value.trim() : "";
             const diaSelect = document.getElementById('dia-entrega');
             const dia = diaSelect && diaSelect.value ? diaSelect.value : "[Elegir entre miércoles por la tarde o sábado por la mañana]";
 
-            // Mostrar modal de confirmación
-            console.log('Intentando mostrar modal de confirmación...');
-            console.log('window.mostrarModalConfirmacionPedido existe?', typeof window.mostrarModalConfirmacionPedido);
-            
             const modalMostrado = window.mostrarModalConfirmacionPedido({
                 carrito,
                 productos,
@@ -284,19 +295,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     const ok = await window.enviarPedido({ carrito, productos, nombre, diaEntrega: dia });
                     if (ok) {
                         // Construir mensaje WhatsApp
-                        let mensaje = "Hola, quiero hacer un pedido con lo siguiente:%0A";
+                        let mensaje = "";
+                        let list_product = "";
                         let hayProductos = false;
                         for (const [productoId, cantidad] of Object.entries(carrito)) {
                             if (cantidad > 0) {
                                 // Buscar el producto para obtener su nombre
                                 const producto = productos.find(p => p.id === productoId);
                                 const nombreProducto = producto ? producto.nombre : productoId;
-                                mensaje += `- ${nombreProducto}: ${cantidad}%0A`;
+                                list_product += `- ${nombreProducto}: ${cantidad}%0A`;
                                 hayProductos = true;
                             }
                         }
                         if (hayProductos) {
-                            mensaje += `%0AMi nombre es *${nombre}* %0APor favor, me gustaría recibirlo el día *${dia}*.`;
+                            mensaje += "Hola, quiero hacer un pedido:%0A";
+                            mensaje += `${list_product}`;
+                            if (nombre && dia) {
+                                mensaje += `%0AMi nombre es *${nombre}* %0APor favor, me gustaría recibirlo el día *${dia}*.`;
+                            } else {
+                                mensaje += `%0APor favor, me gustaría recibirlo el día *${dia}*.`;
+                            }
                         } else {
                             mensaje = "Hola, quiero hacer un pedido.";
                         }
@@ -307,11 +325,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            console.log('Modal mostrado?', modalMostrado);
             if (modalMostrado === false) {
                 // Si no hay productos, enviar WhatsApp directamente (sin fetch)
                 let mensaje = "Hola, quiero hacer un pedido.";
-                if (nombre || dia) {
+                console.log(nombre, dia)
+                if (nombre && dia) {
                     mensaje += `%0AMi nombre es *${nombre}* %0APor favor, me gustaría recibirlo el día *${dia}*.`;
                 }
                 mensaje += "%0AGracias!";
@@ -410,6 +428,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hacer la función disponible globalmente para mostrarModalStock
     window.limpiarCarritoCompleto = limpiarCarritoCompleto;
 });
+
+// Función para mostrar mensaje cuando no hay productos/promociones disponibles
+function mostrarMensajeNoDisponible(contenedor, tipo) {
+    const div = document.createElement('div');
+    div.className = 'no-disponible-mensaje';
+    div.innerHTML = `
+        <div class="no-disponible-content">
+            <h3>No hay ${tipo} disponibles</h3>
+            <p>Podés enterarte de las novedades en <a href="#about" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">nuestras redes</a> 📱</p>
+        </div>
+    `;
+    contenedor.appendChild(div);
+}
 
 function mostrarModalStock(mensaje, stockDisponible = null) {
     const modal = document.getElementById('stock-modal');
