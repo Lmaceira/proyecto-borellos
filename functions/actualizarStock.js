@@ -75,59 +75,32 @@ exports.actualizarStock = functions.https.onRequest(async (req, res) => {
             }
             
             console.log(`Producto: ${producto.nombre}, es promoción: ${producto.promocion}`);
-            console.log(`Productos incluidos:`, producto.productos);
-            console.log(`Tipo de producto.productos:`, typeof producto.productos);
-            console.log(`Es array?:`, Array.isArray(producto.productos));
+            console.log(`Productos incluidos:`, producto.productosIncluidos);
+            console.log(`Tipo de producto.productosIncluidos:`, typeof producto.productosIncluidos);
+            console.log(`Es array?:`, Array.isArray(producto.productosIncluidos));
             
-            if (producto.promocion && producto.productos) {
+            if (producto.promocion && producto.productosIncluidos) {
                 // Es una promoción - agregar stock requerido de productos incluidos
-                console.log(`✅ DETECTADA PROMOCIÓN: ${producto.nombre} con productos:`, producto.productos);
+                console.log(`✅ DETECTADA PROMOCIÓN: ${producto.nombre} con productos:`, producto.productosIncluidos);
                 
-                // Si productos es un array
-                if (Array.isArray(producto.productos)) {
-                    for (const inc of producto.productos) {
-                        console.log(`Procesando producto incluido (array):`, inc);
-                        if (inc && inc.id && inc.cantidad) {
+                // Nueva estructura: array de mapas {cantidad, productId}
+                if (Array.isArray(producto.productosIncluidos)) {
+                    for (const inc of producto.productosIncluidos) {
+                        console.log(`Procesando producto incluido:`, inc);
+                        if (inc && inc.productId && inc.cantidad) {
                             const cantidadRequerida = cantidad * inc.cantidad;
-                            console.log(`  - Producto incluido ${inc.id}: ${cantidadRequerida} unidades (${cantidad} x ${inc.cantidad})`);
+                            console.log(`  - Producto incluido ${inc.productId}: ${cantidadRequerida} unidades (${cantidad} x ${inc.cantidad})`);
                             
-                            if (!stockRequerido[inc.id]) {
-                                stockRequerido[inc.id] = 0;
+                            if (!stockRequerido[inc.productId]) {
+                                stockRequerido[inc.productId] = 0;
                             }
-                            stockRequerido[inc.id] += cantidadRequerida;
+                            stockRequerido[inc.productId] += cantidadRequerida;
                         } else {
                             console.log(`❌ Producto incluido inválido:`, inc);
                         }
                     }
-                } 
-                // Si productos es un objeto/map
-                else if (typeof producto.productos === 'object') {
-                    console.log(`Procesando productos como objeto/map:`, producto.productos);
-                    // Si tiene propiedades id y cantidad directamente
-                    if (producto.productos.id && producto.productos.cantidad) {
-                        const cantidadRequerida = cantidad * producto.productos.cantidad;
-                        console.log(`  - Producto incluido ${producto.productos.id}: ${cantidadRequerida} unidades (${cantidad} x ${producto.productos.cantidad})`);
-                        
-                        if (!stockRequerido[producto.productos.id]) {
-                            stockRequerido[producto.productos.id] = 0;
-                        }
-                        stockRequerido[producto.productos.id] += cantidadRequerida;
-                    }
-                    // Si es un map con múltiples productos
-                    else {
-                        for (const [key, value] of Object.entries(producto.productos)) {
-                            console.log(`Procesando entrada del map:`, key, value);
-                            if (value && typeof value === 'object' && value.id && value.cantidad) {
-                                const cantidadRequerida = cantidad * value.cantidad;
-                                console.log(`  - Producto incluido ${value.id}: ${cantidadRequerida} unidades (${cantidad} x ${value.cantidad})`);
-                                
-                                if (!stockRequerido[value.id]) {
-                                    stockRequerido[value.id] = 0;
-                                }
-                                stockRequerido[value.id] += cantidadRequerida;
-                            }
-                        }
-                    }
+                } else {
+                    console.log(`❌ productosIncluidos no es un array:`, producto.productosIncluidos);
                 }
             } else {
                 // Es un producto normal - agregar directamente al stock requerido
