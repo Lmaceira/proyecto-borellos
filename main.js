@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (cantidad > 0) {
                 const producto = productos.find(p => p.id === productoId);
                 console.log(`- ${producto?.nombre || productoId}: ${cantidad} unidades`);
-                if (producto?.promocion && producto?.productos) {
-                    // console.log(`  Es promoción con:`, producto.productos);
+                if (producto?.promocion && producto?.productosIncluidos) {
+                    console.log(`  Es promoción con:`, producto.productosIncluidos);
                 }
             }
         }
