@@ -73,24 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
-        console.log('Enviando validación con:', { 
-            carrito, 
-            productos: productos.length + ' productos',
-            validar: true 
-        });
-        
-        // Mostrar detalles del carrito para debug
-        console.log('Detalles del carrito:');
-        for (const [productoId, cantidad] of Object.entries(carrito)) {
-            if (cantidad > 0) {
-                const producto = productos.find(p => p.id === productoId);
-                console.log(`- ${producto?.nombre || productoId}: ${cantidad} unidades`);
-                if (producto?.promocion && producto?.productosIncluidos) {
-                    console.log(`  Es promoción con:`, producto.productosIncluidos);
-                }
-            }
-        }
-        
         for (let intento = 1; intento <= reintentos; intento++) {
             try {
                 const res = await fetch('https://actualizarstock-dacnykrkba-uc.a.run.app', {
@@ -99,14 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Content-Type': 'application/json',
                         'x-api-key': STOCK_API_KEY
                     },
-                    body: JSON.stringify({ carrito, productos, validar: true }) // Enviar productos también
+                    body: JSON.stringify({ carrito, productos, validar: true })
                 });
                 const data = await res.json();
-                console.log('Respuesta de validación:', data);
                 
                 if (res.ok) return true;
-                
-                console.log(`Intento ${intento} de validación falló:`, data);
                 
                 if (data && data.faltantes) {
                     mostrarModalStock('', data.stockDisponible);
@@ -120,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 await new Promise(resolve => setTimeout(resolve, Math.pow(2, intento) * 100));
                 
             } catch (e) {
-                console.log(`Intento ${intento} falló por error de conexión:`, e);
                 if (intento === reintentos) {
                     mostrarModalStock('Error de conexión al validar stock.');
                     return false;
@@ -328,7 +306,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (modalMostrado === false) {
                 // Si no hay productos, enviar WhatsApp directamente (sin fetch)
                 let mensaje = "Hola, quiero hacer un pedido.";
-                console.log(nombre, dia)
                 if (nombre && dia) {
                     mensaje += `%0AMi nombre es *${nombre}* %0APor favor, me gustaría recibirlo el día *${dia}*.`;
                 }
@@ -401,8 +378,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para limpiar el carrito y resetear contadores
     function limpiarCarritoCompleto() {
-        console.log("Limpiando carrito completo...");
-        
         // Resetear el objeto carrito
         for (const productoId in carrito) {
             carrito[productoId] = 0;
@@ -421,8 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Actualizar el total
         actualizarTotalCarrito();
-        
-        console.log("Carrito completamente limpiado");
     }
 
     // Hacer la función disponible globalmente para mostrarModalStock

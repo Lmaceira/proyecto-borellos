@@ -71,22 +71,31 @@ window.mostrarModalConfirmacionPedido = function({ carrito, productos, nombre, d
 
 // Función para enviar el pedido a la Cloud Function
 window.enviarPedido = async function({ carrito, productos, nombre, diaEntrega }) {
-  // Construir array de productos del pedido
+  // Construir array de productos del pedido y calcular total
+  let total = 0;
   const productosPedido = productos.filter(p => (carrito[p.id] || 0) > 0).map(p => {
     let precio = typeof p.precioUnidad === 'number' ? p.precioUnidad : parseFloat((p.precioUnidad || p.precio || '0').toString().replace(/[^\d,\.]/g, '').replace(',', '.'));
+    const cantidad = carrito[p.id];
+    const subtotal = precio * cantidad;
+    total += subtotal;
+    
     return {
       nombre: p.nombre,
-      cantidad: carrito[p.id],
-      precio: precio
+      cantidad: cantidad,
+      precio: precio,
+      subtotal: subtotal
     };
   });
+  
   const pedido = {
     nombre,
     diaEntrega,
     productos: productosPedido,
+    total: parseFloat(total.toFixed(2)), // Total con 2 decimales
     estado: 'Pendiente',
     fecha: new Date().toISOString()
   };
+  
   try {
     const res = await fetch(PEDIDO_ENDPOINT, {
       method: 'POST',
@@ -99,6 +108,7 @@ window.enviarPedido = async function({ carrito, productos, nombre, diaEntrega })
     if (!res.ok) throw new Error('Error al guardar el pedido');
     return true;
   } catch (e) {
+    console.error('Error guardando pedido:', e);
     alert('No se pudo registrar el pedido. Intenta de nuevo.');
     return false;
   }
