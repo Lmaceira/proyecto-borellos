@@ -250,6 +250,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (whatsappBtn) {
         whatsappBtn.addEventListener('click', async function(e) {
             e.preventDefault();
+            
+            // Validar que se pueda realizar pedido según el día
+            const ahora = new Date();
+            const diaSemana = ahora.getDay();
+            const horaActual = ahora.getHours();
+            
+            if (diaSemana === 5 || diaSemana === 6) { // Viernes o Sábado
+                alert('Los pedidos se vuelven a recibir el domingo cuando se actualice el stock semanal.');
+                return;
+            }
+            
             // Validar stock antes de proceder
             const stockValido = await validarStock(carrito);
             if (!stockValido) return;
@@ -258,7 +269,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const nombreInput = document.getElementById('nombre-usuario');
             const nombre = nombreInput && nombreInput.value.trim() ? nombreInput.value.trim() : "";
             const diaSelect = document.getElementById('dia-entrega');
-            const dia = diaSelect && diaSelect.value ? diaSelect.value : "[Elegir entre miércoles por la tarde o sábado por la mañana]";
+            const dia = diaSelect && diaSelect.value ? diaSelect.value : "";
+            
+            // Validar que hay día seleccionado
+            if (!dia || dia === "") {
+                alert('Por favor selecciona un día de entrega válido.');
+                return;
+            }
 
             const modalMostrado = window.mostrarModalConfirmacionPedido({
                 carrito,
@@ -469,3 +486,47 @@ function mostrarModalStock(mensaje, stockDisponible = null) {
         modal.classList.add('hidden');
     });
 }
+
+// Función para actualizar las opciones de día de entrega según las reglas de negocio
+function actualizarOpcionesDiaEntrega() {
+    const ahora = new Date();
+    const diaSemana = ahora.getDay(); // 0=domingo, 1=lunes, ..., 6=sábado
+    const horaActual = ahora.getHours();
+    const diaEntregaSelect = document.getElementById('dia-entrega');
+    
+    if (!diaEntregaSelect) return;
+    
+    // Limpiar opciones actuales
+    diaEntregaSelect.innerHTML = '';
+    
+    // Validar según las reglas
+    if (diaSemana === 0 || diaSemana === 1 || (diaSemana === 2 && horaActual < 13)) {
+        // Domingo, Lunes, Martes antes de las 13h -> Miércoles Y Sábado disponibles
+        diaEntregaSelect.innerHTML = `
+            <option value="Miércoles por la tarde" selected>Miércoles por la tarde</option>
+            <option value="Sábado por la mañana">Sábado por la mañana</option>
+        `;
+    } else if ((diaSemana === 2 && horaActual >= 13) || diaSemana === 3 || diaSemana === 4) {
+        // Martes después de las 13h, Miércoles, Jueves -> Solo sábado
+        diaEntregaSelect.innerHTML = '<option value="Sábado por la mañana" selected>Sábado por la mañana</option>';
+    } else {
+        // Viernes y Sábado -> No hay opciones disponibles
+        diaEntregaSelect.innerHTML = '<option value="" disabled selected>No hay entregas disponibles</option>';
+        diaEntregaSelect.disabled = true;
+        
+        // Mostrar mensaje informativo
+        const liElement = diaEntregaSelect.parentElement;
+        if (liElement && !liElement.querySelector('.mensaje-no-disponible')) {
+            const mensaje = document.createElement('div');
+            mensaje.className = 'mensaje-no-disponible';
+            mensaje.style.cssText = 'color: #e74c3c; font-size: 0.9em; margin-top: 8px; font-style: italic;';
+            mensaje.textContent = 'Los pedidos se vuelven a recibir el domingo cuando se actualice el stock semanal.';
+            liElement.appendChild(mensaje);
+        }
+    }
+}
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    actualizarOpcionesDiaEntrega();
+});

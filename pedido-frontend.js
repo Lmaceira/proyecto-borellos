@@ -69,8 +69,86 @@ window.mostrarModalConfirmacionPedido = function({ carrito, productos, nombre, d
   return true;
 };
 
+// Función para calcular la fecha de entrega según el día seleccionado
+function calcularFechaEntrega(diaEntrega) {
+  const ahora = new Date();
+  const fecha = new Date();
+  
+  if (diaEntrega === "Miércoles por la tarde") {
+    // Buscar el próximo miércoles (día 3 de la semana, donde 0=domingo)
+    const diasHastaMiercoles = (3 - ahora.getDay() + 7) % 7;
+    if (diasHastaMiercoles === 0) {
+      // Si hoy es miércoles, buscar el siguiente miércoles
+      fecha.setDate(ahora.getDate() + 7);
+    } else {
+      fecha.setDate(ahora.getDate() + diasHastaMiercoles);
+    }
+    fecha.setHours(18, 0, 0, 0); // 6:00 PM UTC+2
+  } else if (diaEntrega === "Sábado por la mañana") {
+    // Buscar el próximo sábado (día 6 de la semana)
+    const diasHastaSabado = (6 - ahora.getDay() + 7) % 7;
+    if (diasHastaSabado === 0) {
+      // Si hoy es sábado, buscar el siguiente sábado
+      fecha.setDate(ahora.getDate() + 7);
+    } else {
+      fecha.setDate(ahora.getDate() + diasHastaSabado);
+    }
+    fecha.setHours(9, 0, 0, 0); // 9:00 AM UTC+2
+  }
+  
+  return fecha;
+}
+
+// Función para validar si se pueden hacer pedidos según el día actual
+function validarDiasPedido() {
+  const ahora = new Date();
+  const diaSemana = ahora.getDay(); // 0=domingo, 1=lunes, ..., 6=sábado
+  const horaActual = ahora.getHours();
+  
+  // Viernes (5) y Sábado (6) -> No se reciben pedidos
+  if (diaSemana === 5 || diaSemana === 6) {
+    return { 
+      puedeRealizarPedido: false, 
+      diasDisponibles: [],
+      mensaje: "Los pedidos se vuelven a recibir el domingo cuando se actualice el stock semanal."
+    };
+  }
+  
+  // Domingo (0), Lunes (1), Martes (2) hasta las 13h -> Pueden pedir para miércoles
+  if (diaSemana === 0 || diaSemana === 1 || (diaSemana === 2 && horaActual < 13)) {
+    return { 
+      puedeRealizarPedido: true, 
+      diasDisponibles: ["Miércoles por la tarde", "Sábado por la mañana"],
+      mensaje: ""
+    };
+  }
+  
+  // Martes después de las 13h (2), Miércoles (3), Jueves (4) -> Solo pueden pedir para sábado
+  if ((diaSemana === 2 && horaActual >= 13) || diaSemana === 3 || diaSemana === 4) {
+    return { 
+      puedeRealizarPedido: true, 
+      diasDisponibles: ["Sábado por la mañana"],
+      mensaje: ""
+    };
+  }
+  
+  // Fallback (no debería llegar aquí)
+  return { 
+    puedeRealizarPedido: false, 
+    diasDisponibles: [],
+    mensaje: "Error en la validación de días."
+  };
+}
+
 // Función para enviar el pedido a la Cloud Function
 window.enviarPedido = async function({ carrito, productos, nombre, diaEntrega }) {
+  // Validar que se pueda realizar pedido
+  const validacion = validarDiasPedido();
+  if (!validacion.puedeRealizarPedido) {
+    alert(validacion.mensaje);
+    return false;
+  }
+  
   // Construir array de productos del pedido y calcular total
   let total = 0;
   const productosPedido = productos.filter(p => (carrito[p.id] || 0) > 0).map(p => {
@@ -80,20 +158,28 @@ window.enviarPedido = async function({ carrito, productos, nombre, diaEntrega })
     total += subtotal;
     
     return {
+      idProducto: p.id,
       nombre: p.nombre,
-      cantidad: cantidad,
       precio: precio,
+      cantidad: cantidad,
       subtotal: subtotal
     };
   });
   
+  // Calcular fecha de entrega
+  const fechaEntrega = calcularFechaEntrega(diaEntrega);
+  
   const pedido = {
-    nombre,
-    diaEntrega,
-    productos: productosPedido,
-    total: parseFloat(total.toFixed(2)), // Total con 2 decimales
-    estado: 'Pendiente',
-    fecha: new Date().toISOString()
+    cliente: nombre || "",
+    direccionEnvio: "", // Campo vacío por ahora
+    creadoEn: "Web",
+    fechaCreacion: new Date(),
+    diaEntrega: diaEntrega,
+    fechaEntrega: fechaEntrega,
+    ultimaActualizacion: new Date(),
+    total: parseFloat(total.toFixed(2)),
+    estado: "Pendiente", // Estado inicial del pedido
+    productos: productosPedido
   };
   
   try {
@@ -113,3 +199,6 @@ window.enviarPedido = async function({ carrito, productos, nombre, diaEntrega })
     return false;
   }
 };
+
+// Exponer la función de validación globalmente
+window.validarDiasPedido = validarDiasPedido;

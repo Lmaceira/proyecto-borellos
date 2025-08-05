@@ -32,7 +32,14 @@ exports.crearPedido = functions.https.onRequest(async (req, res) => {
     const db = admin.firestore();
     const pedidoData = {
       ...req.body,
-      fecha: admin.firestore.FieldValue.serverTimestamp()
+      fechaCreacion: admin.firestore.FieldValue.serverTimestamp(),
+      ultimaActualizacion: admin.firestore.FieldValue.serverTimestamp(),
+      // Convertir fechaEntrega de ISO string a Timestamp si viene como string
+      fechaEntrega: req.body.fechaEntrega ? 
+        (typeof req.body.fechaEntrega === 'string' ? 
+          admin.firestore.Timestamp.fromDate(new Date(req.body.fechaEntrega)) : 
+          req.body.fechaEntrega) : 
+        null
     };
     
     await db.collection("pedidos").add(pedidoData);
